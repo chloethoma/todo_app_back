@@ -12,14 +12,14 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api')]
 class TaskApiController extends AbstractController
 {
-    #[Route('/task', name:'show_task', methods:['GET'])]
+    #[Route('/tasks', name:'show_task', methods:['GET'])]
     public function showTask(EntityManagerInterface $em): Response
     {
         $task = $em->getRepository(Task::class)->findAll();
         return $this->json($task);
     }
 
-    #[Route('/task', name: 'create_task', methods:['POST'])]
+    #[Route('/tasks', name: 'create_task', methods:['POST'])]
     public function createTask(EntityManagerInterface $em, Request $request): Response
     {
         $param = json_decode($request->getContent(), true);
@@ -38,7 +38,7 @@ class TaskApiController extends AbstractController
         ));
     }
 
-    #[Route('/task/{id}', name:'update_task', methods:['PUT'])]
+    #[Route('/tasks/{id}', name:'update_task', methods:['PUT'])]
     public function editTask(EntityManagerInterface $em, Request $request, int $id)
     {
         $param = json_decode($request->getContent(), true);
@@ -64,7 +64,7 @@ class TaskApiController extends AbstractController
         ));
     }
 
-    #[Route('/task/{id}', name:'delete_task', methods:['DELETE'])]
+    #[Route('/tasks/{id}', name:'delete_task', methods:['DELETE'])]
     public function deleteTask(EntityManagerInterface $em, int $id)
     {
         $task = $em->getRepository(Task::class)->find($id);
